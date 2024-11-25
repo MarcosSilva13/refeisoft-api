@@ -11,5 +11,5 @@ public record TransactionResponseDTO(
         TransactionType transactionType,
         Integer quantity,
         LocalDateTime transactionDate,
-        StudentResponseDTO student) {
+        BasicStudentResponseDTO student) {
 }
