@@ -4,8 +4,11 @@ import com.refeisoft.api.dto.PageResponseDTO;
 import com.refeisoft.api.dto.StudentRequestDTO;
 import com.refeisoft.api.dto.StudentResponseDTO;
 import com.refeisoft.api.mapper.StudentMapper;
+import com.refeisoft.domain.entity.Credit;
 import com.refeisoft.domain.entity.Student;
+import com.refeisoft.domain.enums.MealType;
 import com.refeisoft.domain.enums.Status;
+import com.refeisoft.domain.repository.CreditRepository;
 import com.refeisoft.domain.repository.StudentRepository;
 import com.refeisoft.infra.exception.DuplicateAttributeException;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,15 +18,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final CreditRepository creditRepository;
     private final StudentMapper studentMapper;
     private static final int PAGE_SIZE = 10;
 
-    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
+    public StudentService(StudentRepository studentRepository, CreditRepository creditRepository, StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
+        this.creditRepository = creditRepository;
         this.studentMapper = studentMapper;
     }
 
@@ -43,7 +50,16 @@ public class StudentService {
         student.setStatus(Status.ACTIVE);
         Student studentCreated = studentRepository.save(student);
 
+        createStudentCredits(studentCreated);
         return studentMapper.toStudentResponseDTO(studentCreated);
+    }
+
+    private void createStudentCredits(Student student) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        for (MealType mealType : MealType.values()) {
+            Credit credit = new Credit(student, mealType, 0, dateTime);
+            creditRepository.save(credit);
+        }
     }
 
     @Transactional

@@ -12,8 +12,9 @@ import java.util.Objects;
 public class Credit {
 
     @Id
-    @Column(name = "student_id", nullable = false)
-    private Long studentId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 
     @Id
     @Column(name = "meal_type", nullable = false)
@@ -26,15 +27,11 @@ public class Credit {
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
-
     public Credit() {
     }
 
-    public Credit(Long studentId, MealType mealType, Integer creditQuantity, LocalDateTime lastUpdate) {
-        this.studentId = studentId;
+    public Credit(Student student, MealType mealType, Integer creditQuantity, LocalDateTime lastUpdate) {
+        this.student = student;
         this.mealType = mealType;
         this.creditQuantity = creditQuantity;
         this.lastUpdate = lastUpdate;
@@ -46,14 +43,6 @@ public class Credit {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
     }
 
     public MealType getMealType() {
@@ -83,11 +72,11 @@ public class Credit {
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof Credit credit)) return false;
-        return Objects.equals(studentId, credit.studentId) && mealType == credit.mealType;
+        return Objects.equals(student, credit.student) && mealType == credit.mealType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studentId, mealType);
+        return Objects.hash(student, mealType);
     }
 }
