@@ -3,6 +3,7 @@ package com.refeisoft.api.controller;
 import com.refeisoft.api.dto.PageResponseDTO;
 import com.refeisoft.api.dto.StudentRequestDTO;
 import com.refeisoft.api.dto.StudentResponseDTO;
+import com.refeisoft.api.filter.StudentFilter;
 import com.refeisoft.domain.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,8 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<PageResponseDTO> getAll(@RequestParam int page) {
-        PageResponseDTO pageResponseDTO = studentService.getAllStudents(page);
+    public ResponseEntity<PageResponseDTO> getAll(@RequestParam int page, StudentFilter filter) {
+        PageResponseDTO pageResponseDTO = studentService.getAllStudents(page, filter);
         return ResponseEntity.ok(pageResponseDTO);
     }
 

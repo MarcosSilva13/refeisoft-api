@@ -3,6 +3,7 @@ package com.refeisoft.domain.service;
 import com.refeisoft.api.dto.PageResponseDTO;
 import com.refeisoft.api.dto.StudentRequestDTO;
 import com.refeisoft.api.dto.StudentResponseDTO;
+import com.refeisoft.api.filter.StudentFilter;
 import com.refeisoft.api.mapper.StudentMapper;
 import com.refeisoft.domain.entity.Credit;
 import com.refeisoft.domain.entity.Student;
@@ -14,7 +15,6 @@ import com.refeisoft.infra.exception.DuplicateAttributeException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,10 +34,10 @@ public class StudentService {
         this.studentMapper = studentMapper;
     }
 
-    public PageResponseDTO getAllStudents(int page) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "name");
-        PageRequest pageRequest = PageRequest.of(page, PAGE_SIZE, sort);
-        Page<StudentResponseDTO> studentPage = studentRepository.findAll(pageRequest).map(studentMapper::toStudentResponseDTO);
+    public PageResponseDTO getAllStudents(int page, StudentFilter filter) {
+        PageRequest pageRequest = PageRequest.of(page, PAGE_SIZE);
+        Page<StudentResponseDTO> studentPage = studentRepository.findAll(filter.toStudentSpecification(), pageRequest)
+                .map(studentMapper::toStudentResponseDTO);
 
         return new PageResponseDTO(studentPage.getContent(), studentPage.getTotalPages());
     }
