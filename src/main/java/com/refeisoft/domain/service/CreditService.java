@@ -1,7 +1,7 @@
 package com.refeisoft.domain.service;
 
-import com.refeisoft.api.dto.AddCreditRequestDTO;
 import com.refeisoft.api.dto.ConsumeCreditRequestDTO;
+import com.refeisoft.api.dto.CreditRequestDTO;
 import com.refeisoft.api.dto.CreditResponseDTO;
 import com.refeisoft.api.mapper.CreditMapper;
 import com.refeisoft.domain.entity.Credit;
@@ -39,7 +39,7 @@ public class CreditService {
     }
 
     @Transactional
-    public CreditResponseDTO addCredit(AddCreditRequestDTO requestDTO) {
+    public CreditResponseDTO addCredit(CreditRequestDTO requestDTO) {
         if (requestDTO.creditQuantity() < 1) {
             throw new CreditQuantityException("A quantidade de créditos não pode ser menor que 1.");
         }

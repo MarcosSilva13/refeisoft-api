@@ -5,6 +5,7 @@ import com.refeisoft.api.dto.StudentRequestDTO;
 import com.refeisoft.api.dto.StudentResponseDTO;
 import com.refeisoft.api.filter.StudentFilter;
 import com.refeisoft.domain.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +27,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<StudentResponseDTO> create(@RequestBody StudentRequestDTO requestDTO) {
+    public ResponseEntity<StudentResponseDTO> create(@RequestBody @Valid StudentRequestDTO requestDTO) {
         StudentResponseDTO studentResponseDTO = studentService.createStudent(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(studentResponseDTO);
     }
 
     @PutMapping("/{studentId}")
-    public ResponseEntity<StudentResponseDTO> update(@PathVariable Long studentId, @RequestBody StudentRequestDTO requestDTO) {
+    public ResponseEntity<StudentResponseDTO> update(@PathVariable Long studentId, @RequestBody @Valid StudentRequestDTO requestDTO) {
         StudentResponseDTO studentResponseDTO = studentService.updateStudent(studentId, requestDTO);
         return ResponseEntity.ok(studentResponseDTO);
     }

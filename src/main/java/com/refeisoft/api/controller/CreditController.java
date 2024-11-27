@@ -1,9 +1,10 @@
 package com.refeisoft.api.controller;
 
-import com.refeisoft.api.dto.AddCreditRequestDTO;
 import com.refeisoft.api.dto.ConsumeCreditRequestDTO;
+import com.refeisoft.api.dto.CreditRequestDTO;
 import com.refeisoft.api.dto.CreditResponseDTO;
 import com.refeisoft.domain.service.CreditService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,14 +26,14 @@ public class CreditController {
         return ResponseEntity.ok(creditResponseDTOS);
     }
 
-    @PostMapping("/addtion")
-    public ResponseEntity<CreditResponseDTO> addCredit(@RequestBody AddCreditRequestDTO requestDTO) {
+    @PostMapping("/addition")
+    public ResponseEntity<CreditResponseDTO> addCredit(@RequestBody @Valid CreditRequestDTO requestDTO) {
         CreditResponseDTO creditResponseDTO = creditService.addCredit(requestDTO);
         return ResponseEntity.ok(creditResponseDTO);
     }
 
     @PostMapping("/consume")
-    public ResponseEntity<CreditResponseDTO> consumeCredit(@RequestBody ConsumeCreditRequestDTO requestDTO) {
+    public ResponseEntity<CreditResponseDTO> consumeCredit(@RequestBody @Valid ConsumeCreditRequestDTO requestDTO) {
         CreditResponseDTO creditResponseDTO = creditService.consumeCredit(requestDTO);
         return ResponseEntity.ok(creditResponseDTO);
     }
