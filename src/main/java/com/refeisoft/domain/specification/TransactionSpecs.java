@@ -15,54 +15,37 @@ public class TransactionSpecs {
     private TransactionSpecs() {}
 
     private static final String STUDENT = "student";
-    private static final String ATTRIBUTE = "transactionId";
 
     public static Specification<Transaction> byStudentName(String studentName) {
         return (root, query, criteriaBuilder) -> {
-            root.fetch(STUDENT, JoinType.INNER);
-            query.orderBy(criteriaBuilder.desc(root.get(ATTRIBUTE)));
-            Join<Transaction, Student> studentJoin = root.join(STUDENT);
-
             if (ObjectUtils.isEmpty(studentName)) {
-                return criteriaBuilder.conjunction();
+                return null;
             }
-
+            Join<Transaction, Student> studentJoin = root.join(STUDENT, JoinType.INNER);
             return criteriaBuilder.like(studentJoin.get("name"), "%" + studentName + "%");
         };
     }
 
     public static Specification<Transaction> byMealType(MealType mealType) {
         return (root, query, criteriaBuilder) -> {
-            root.fetch(STUDENT, JoinType.INNER);
-            query.orderBy(criteriaBuilder.desc(root.get(ATTRIBUTE)));
-
             if (ObjectUtils.isEmpty(mealType)) {
                 return null;
             }
-
             return criteriaBuilder.equal(root.get("mealType"), mealType);
         };
     }
 
     public static Specification<Transaction> byTransactionType(TransactionType transactionType) {
         return (root, query, criteriaBuilder) -> {
-            root.fetch(STUDENT, JoinType.INNER);
-            query.orderBy(criteriaBuilder.desc(root.get(ATTRIBUTE)));
-
             if (ObjectUtils.isEmpty(transactionType)) {
-
                 return null;
             }
-
             return criteriaBuilder.equal(root.get("transactionType"), transactionType);
         };
     }
 
     public static Specification<Transaction> byTransactionDate(LocalDateTime initialDate, LocalDateTime finalDate) {
         return (root, query, criteriaBuilder) -> {
-            root.fetch(STUDENT, JoinType.INNER);
-            query.orderBy(criteriaBuilder.desc(root.get(ATTRIBUTE)));
-
             if (!ObjectUtils.isEmpty(initialDate) && !ObjectUtils.isEmpty(finalDate)) {
                 return criteriaBuilder.between(root.get("transactionDate"), initialDate, finalDate);
             } else if (!ObjectUtils.isEmpty(initialDate)) {

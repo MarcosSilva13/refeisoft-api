@@ -7,6 +7,7 @@ import com.refeisoft.api.mapper.TransactionMapper;
 import com.refeisoft.domain.repository.TransactionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,7 +23,8 @@ public class TransactionService {
     }
 
     public PageResponseDTO getAllTransaction(int page, TransactionFilter filter) {
-        PageRequest pageRequest = PageRequest.of(page, PAGE_SIZE);
+        Sort sort = Sort.by(Sort.Direction.DESC, "transactionId");
+        PageRequest pageRequest = PageRequest.of(page, PAGE_SIZE, sort);
         Page<TransactionResponseDTO> transactionPage = transactionRepository.findAll(filter.toTransactionSpecification(), pageRequest)
                 .map(transactionMapper::toTransactionResponseDTO);
 
