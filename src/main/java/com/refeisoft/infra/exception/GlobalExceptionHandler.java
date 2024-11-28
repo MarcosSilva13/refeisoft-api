@@ -34,6 +34,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return generateErrorDTO(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
+    @ExceptionHandler(StudentBlockedException.class)
+    public ResponseEntity<ErrorDTO> studentBlockedExceptionHandler(StudentBlockedException ex) {
+        return generateErrorDTO(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorDTO> runtimeExceptionHandler(RuntimeException ex) {
         logger.info("\nErro no servidor: " + ex.getMessage(), ex);
