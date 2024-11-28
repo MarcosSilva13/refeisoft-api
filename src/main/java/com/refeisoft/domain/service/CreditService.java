@@ -8,10 +8,12 @@ import com.refeisoft.domain.entity.Credit;
 import com.refeisoft.domain.entity.Student;
 import com.refeisoft.domain.entity.Transaction;
 import com.refeisoft.domain.enums.MealType;
+import com.refeisoft.domain.enums.Status;
 import com.refeisoft.domain.enums.TransactionType;
 import com.refeisoft.domain.repository.CreditRepository;
 import com.refeisoft.domain.repository.TransactionRepository;
 import com.refeisoft.infra.exception.CreditQuantityException;
+import com.refeisoft.infra.exception.StudentBlockedException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,6 +65,11 @@ public class CreditService {
     }
 
     private CreditResponseDTO updateCredit(Credit credit, int quantity, TransactionType transactionType) {
+        Student student = credit.getStudent();
+        if (student.getStatus() == Status.BLOCKED) {
+            throw new StudentBlockedException("Aluno(a): " + student.getName() + " está bloqueado até: " + student.getBlockedUntil() + ".");
+        }
+
         int newCreditQuantity = transactionType == TransactionType.ADDITION
                 ? credit.getCreditQuantity() + quantity
                 : credit.getCreditQuantity() - quantity;
@@ -71,7 +78,7 @@ public class CreditService {
         credit.setCreditQuantity(newCreditQuantity);
         credit.setLastUpdate(dateTime);
 
-        updateTransaction(credit.getMealType(), transactionType, quantity, dateTime, credit.getStudent());
+        updateTransaction(credit.getMealType(), transactionType, quantity, dateTime, student);
         return creditMapper.toCreditResponseDTO(credit);
     }
 

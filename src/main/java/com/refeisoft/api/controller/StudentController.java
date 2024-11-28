@@ -1,5 +1,6 @@
 package com.refeisoft.api.controller;
 
+import com.refeisoft.api.dto.BlockStudentRequestDTO;
 import com.refeisoft.api.dto.PageResponseDTO;
 import com.refeisoft.api.dto.StudentRequestDTO;
 import com.refeisoft.api.dto.StudentResponseDTO;
@@ -48,5 +49,17 @@ public class StudentController {
     public ResponseEntity<Void> delete(@PathVariable Long studentId) {
         studentService.deleteStudent(studentId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/block")
+    public ResponseEntity<StudentResponseDTO> blockStudent(@RequestBody @Valid BlockStudentRequestDTO requestDTO) {
+        StudentResponseDTO studentResponseDTO = studentService.blockStudent(requestDTO);
+        return ResponseEntity.ok(studentResponseDTO);
+    }
+
+    @PatchMapping("/unblock/{studentId}")
+    public ResponseEntity<StudentResponseDTO> unblockStudent(@PathVariable Long studentId) {
+        StudentResponseDTO studentResponseDTO = studentService.manualUnblockStudent(studentId);
+        return ResponseEntity.ok(studentResponseDTO);
     }
 }
