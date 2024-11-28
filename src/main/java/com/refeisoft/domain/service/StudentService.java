@@ -42,6 +42,11 @@ public class StudentService {
         return new PageResponseDTO(studentPage.getContent(), studentPage.getTotalPages());
     }
 
+    public StudentResponseDTO getStudent(Long studentId) {
+        Student student = getStudentById(studentId);
+        return studentMapper.toStudentResponseDTO(student);
+    }
+
     @Transactional
     public StudentResponseDTO createStudent(StudentRequestDTO requestDTO) {
         verifyRegistrationNumber(requestDTO.registrationNumber());
@@ -64,9 +69,9 @@ public class StudentService {
 
     @Transactional
     public StudentResponseDTO updateStudent(Long studentId, StudentRequestDTO requestDTO) {
-        Student studentToUpdate = getStudentById(studentId);
-        boolean registrationNumberChanged = !requestDTO.registrationNumber().equals(studentToUpdate.getRegistrationNumber());
-        boolean emailChanged = !requestDTO.email().equals(studentToUpdate.getEmail());
+        Student student = getStudentById(studentId);
+        boolean registrationNumberChanged = !requestDTO.registrationNumber().equals(student.getRegistrationNumber());
+        boolean emailChanged = !requestDTO.email().equals(student.getEmail());
 
         if (registrationNumberChanged) {
             verifyRegistrationNumber(requestDTO.registrationNumber());
@@ -76,10 +81,8 @@ public class StudentService {
             verifyEmail(requestDTO.email());
         }
 
-        studentMapper.toUpdateStudent(requestDTO, studentToUpdate);
-        Student studentUpdated = studentRepository.save(studentToUpdate);
-
-        return studentMapper.toStudentResponseDTO(studentUpdated);
+        studentMapper.toUpdateStudent(requestDTO, student);
+        return studentMapper.toStudentResponseDTO(student);
     }
 
     @Transactional

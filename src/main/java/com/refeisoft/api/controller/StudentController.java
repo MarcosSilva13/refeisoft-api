@@ -26,6 +26,12 @@ public class StudentController {
         return ResponseEntity.ok(pageResponseDTO);
     }
 
+    @GetMapping("/{studentId}")
+    public ResponseEntity<StudentResponseDTO> getOne(@PathVariable Long studentId) {
+        StudentResponseDTO studentResponseDTO = studentService.getStudent(studentId);
+        return ResponseEntity.ok(studentResponseDTO);
+    }
+
     @PostMapping
     public ResponseEntity<StudentResponseDTO> create(@RequestBody @Valid StudentRequestDTO requestDTO) {
         StudentResponseDTO studentResponseDTO = studentService.createStudent(requestDTO);
