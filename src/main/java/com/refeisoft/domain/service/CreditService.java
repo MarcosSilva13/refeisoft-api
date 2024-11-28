@@ -70,11 +70,9 @@ public class CreditService {
         LocalDateTime dateTime = LocalDateTime.now();
         credit.setCreditQuantity(newCreditQuantity);
         credit.setLastUpdate(dateTime);
-        Credit creditSaved = creditRepository.save(credit);
 
-        updateTransaction(creditSaved.getMealType(), transactionType, quantity, dateTime, creditSaved.getStudent());
-
-        return creditMapper.toCreditResponseDTO(creditSaved);
+        updateTransaction(credit.getMealType(), transactionType, quantity, dateTime, credit.getStudent());
+        return creditMapper.toCreditResponseDTO(credit);
     }
 
     private void updateTransaction(MealType mealType, TransactionType transactionType, int quantity,
