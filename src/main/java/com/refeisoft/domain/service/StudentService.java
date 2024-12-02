@@ -16,6 +16,7 @@ import com.refeisoft.infra.exception.DuplicateAttributeException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +40,8 @@ public class StudentService {
     }
 
     public PageResponseDTO getAllStudents(int page, StudentFilter filter) {
-        PageRequest pageRequest = PageRequest.of(page, PAGE_SIZE);
+        Sort sort = Sort.by(Sort.Direction.ASC, "name");
+        PageRequest pageRequest = PageRequest.of(page, PAGE_SIZE, sort);
         Page<StudentResponseDTO> studentPage = studentRepository.findAll(filter.toStudentSpecification(), pageRequest)
                 .map(studentMapper::toStudentResponseDTO);
 
