@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,6 +38,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(StudentBlockedException.class)
     public ResponseEntity<ErrorDTO> studentBlockedExceptionHandler(StudentBlockedException ex) {
         return generateErrorDTO(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorDTO> badCredentialsExceptionHandler(BadCredentialsException ex) {
+        return generateErrorDTO(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(MismatchedPasswordException.class)
+    public ResponseEntity<ErrorDTO> mismatchedPasswordExceptionHandler(MismatchedPasswordException ex) {
+        return generateErrorDTO(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(RuntimeException.class)
