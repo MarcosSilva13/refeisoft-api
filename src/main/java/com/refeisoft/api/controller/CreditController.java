@@ -3,6 +3,7 @@ package com.refeisoft.api.controller;
 import com.refeisoft.api.dto.ConsumeCreditRequestDTO;
 import com.refeisoft.api.dto.CreditRequestDTO;
 import com.refeisoft.api.dto.CreditResponseDTO;
+import com.refeisoft.api.openapi.CreditControllerDoc;
 import com.refeisoft.domain.service.CreditService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/credits")
-public class CreditController {
+public class CreditController implements CreditControllerDoc {
 
     private final CreditService creditService;
 

@@ -4,6 +4,7 @@ import com.refeisoft.api.dto.PageResponseDTO;
 import com.refeisoft.api.dto.PasswordRequesDTO;
 import com.refeisoft.api.dto.UpdateUserRequestDTO;
 import com.refeisoft.api.dto.UserResponseDTO;
+import com.refeisoft.api.openapi.UserControllerDoc;
 import com.refeisoft.domain.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController {
+public class UserController implements UserControllerDoc {
 
     private final UserService userService;
 

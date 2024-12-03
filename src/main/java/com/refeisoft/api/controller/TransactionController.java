@@ -2,6 +2,7 @@ package com.refeisoft.api.controller;
 
 import com.refeisoft.api.dto.PageResponseDTO;
 import com.refeisoft.api.filter.TransactionFilter;
+import com.refeisoft.api.openapi.TransactionControllerDoc;
 import com.refeisoft.domain.service.TransactionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/transactions")
-public class TransactionController {
+public class TransactionController implements TransactionControllerDoc {
 
     private final TransactionService transactionService;
 

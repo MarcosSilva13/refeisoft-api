@@ -4,6 +4,7 @@ import com.refeisoft.api.dto.LoginRequestDTO;
 import com.refeisoft.api.dto.TokenJwtDTO;
 import com.refeisoft.api.dto.UserRequestDTO;
 import com.refeisoft.api.dto.UserResponseDTO;
+import com.refeisoft.api.openapi.AuthControllerDoc;
 import com.refeisoft.domain.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthController implements AuthControllerDoc {
 
     private final AuthService authService;
 

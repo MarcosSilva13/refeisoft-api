@@ -5,6 +5,7 @@ import com.refeisoft.api.dto.PageResponseDTO;
 import com.refeisoft.api.dto.StudentRequestDTO;
 import com.refeisoft.api.dto.StudentResponseDTO;
 import com.refeisoft.api.filter.StudentFilter;
+import com.refeisoft.api.openapi.StudentControllerDoc;
 import com.refeisoft.domain.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/students")
-public class StudentController {
+public class StudentController implements StudentControllerDoc {
 
     private final StudentService studentService;
 
