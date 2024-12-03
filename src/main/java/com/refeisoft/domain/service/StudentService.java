@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class StudentService {
@@ -106,8 +105,7 @@ public class StudentService {
         return studentMapper.toStudentResponseDTO(student);
     }
 
-    //@Scheduled(cron = "0 0 0 * * ?")
-    @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.SECONDS) // para testes
+    @Scheduled(cron = "0 0 0 * * ?")
     public void automaticUnblockStudents() {
         LocalDate date = LocalDate.now();
         studentRepository.unblockStudents(date);
