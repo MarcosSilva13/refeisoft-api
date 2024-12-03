@@ -30,9 +30,9 @@ public class SpringSecurityConfig {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/credits/consume").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole(ADMIN)
                         .anyRequest().authenticated())
