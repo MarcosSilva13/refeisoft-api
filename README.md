@@ -1,6 +1,6 @@
 # Refeisoft-api
 <p>
-  Este projeto é um backend para gerenciar o acesso ao refeitório de uma faculdade. Ele oferece funcionalidades para administração de alunos, controle de créditos, monitoramento de        transações, restrições de acesso e gerenciamento de usuários administradores. 
+  Este projeto é um backend para gerenciar o acesso de alunos ao refeitório de uma faculdade. Ele oferece funcionalidades para administração de alunos, controle de créditos,               monitoramento de transações, restrições de acesso e gerenciamento de usuários administradores. 
 </p>
 
 # Funcionalidades 
